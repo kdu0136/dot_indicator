@@ -22,6 +22,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation rootProject.kotlin
+    implementation rootProject.defaultLibs
 
     testImplementation rootProject.junit
     androidTestImplementation rootProject.testLibs

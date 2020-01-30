@@ -26,4 +26,7 @@ ext {
     testEspresso = 'androidx.test.espresso:espresso-core:3.3.0-alpha03'
     testLibs = [testRunner,
                 testEspresso]
+
+
+    picasso = 'com.squareup.picasso:picasso:2.71828'
 }
