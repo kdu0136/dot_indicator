@@ -1,0 +1,42 @@
+# Built application files
+*.apk
+*.apks
+*.aab
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# Generated files
+bin/
+gen/
+out/
+
+# Ignore gradle files
+.gradle/
+build/
+
+# Log Files
+*.log
+
+# fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+fastlane/readme.md
+
+*.iml
+.gradle
+/local.properties
+/.idea/*
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+
+.idea/caches/build_file_checksums.ser
+*.aab
