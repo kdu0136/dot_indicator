@@ -2,7 +2,7 @@ package kim.dongun.dotindicator
 
 import androidx.recyclerview.widget.RecyclerView
 
-internal class ScrollListener(private val indicator: PageIndicator) : RecyclerView.OnScrollListener() {
+internal class ScrollListener(private val indicator: DotIndicator) : RecyclerView.OnScrollListener() {
   private var midPos = 0
   private var scrollX = 0
 

@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <declare-styleable name="PageIndicator">
-    <attr format="dimension" name="piDotSpacing"/>
-    <attr format="dimension" name="piDotBound"/>
+  <declare-styleable name="DotIndicator">
+    <attr format="dimension" name="indicatorPadding"/>
+    <attr format="dimension" name="dotSpacing"/>
 
-    <attr format="dimension" name="piSize1"/>
-    <attr format="dimension" name="piSize2"/>
-    <attr format="dimension" name="piSize3"/>
-    <attr format="dimension" name="piSize4"/>
-    <attr format="dimension" name="piSize5"/>
-    <attr format="dimension" name="piSize6"/>
+    <attr format="dimension" name="dotSelectSize"/>
+    <attr format="dimension" name="dotLargeSize"/>
+    <attr format="dimension" name="dotMediumSize"/>
+    <attr format="dimension" name="dotSmallSize"/>
 
-    <attr format="integer" name="piAnimDuration"/>
+    <attr format="integer" name="indicatorAnimDuration"/>
 
-    <attr format="reference" name="piAnimInterpolator"/>
+    <attr format="reference" name="indicatorAnimInterpolator"/>
 
-    <attr format="color" name="piDefaultColor"/>
-    <attr format="color" name="piSelectedColor"/>
+    <attr format="color" name="dotDefaultColor"/>
+    <attr format="color" name="dotSelectedColor"/>
   </declare-styleable>
 </resources>

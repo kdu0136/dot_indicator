@@ -1,122 +1,118 @@
 package kim.dongun.dotindicator
 
-import android.util.Log
+internal class DotManager(count: Int,
+                          private val visibleDotCnt: Int,
+                          private val dotSize: Int,
+                          private val targetScrollListener: TargetScrollListener) {
+  enum class DotState(val value: Byte) { SELECT(value = 4), LARGE(value = 3), MEDIUM(value = 2), SMALL(value = 1), GONE(value = 0) }
 
-internal class DotManager(
-  count: Int,
-  private val visibleDotCnt: Int,
-  private val dotSize: Int,
-  private val dotSpacing: Int,
-  private val targetScrollListener: TargetScrollListener? = null
-) {
-  enum class DotState(value: Byte) { SELECT(value = 4), UNSELECT(value = 3), MEDIUM(value = 2), SMALL(value = 1), GONE(value = 0) }
-
-  internal var dots: ByteArray = ByteArray(count) // save each dot size (1~6 -> visible & 0 -> invisible)
+  internal var dots: Array<DotState> = Array(count) { DotState.LARGE } // save each dot size (1~6 -> visible & 0 -> invisible)
   internal var selectedIndex = 0
 
   private var scrollAmount = 0
   var scrollStartIndex = 0
   var scrollEndIndex = visibleDotCnt - 1
 
-  private val dotSizeArray: ByteArray = byteArrayOf(5, 4, 4, 3, 2, 1)
+  private val dotSizeArray: ArrayList<DotState> = ArrayList()
 
   init {
-    if (count > 0) {
-      dots[0] = 5
+    if (count > 0) dots[0] = DotState.SELECT
+
+    // init visible dot size array
+    // ex) count 4 -> SELECT LARGE MEDIUN SMALL / count 6 -> SELECT LARGE LARGE MEDIUM MEDIUM SMALL
+    val unSelectIndex = (visibleDotCnt-1) / 2
+    (0 until visibleDotCnt).forEach { i ->
+      val state = when (true) {
+        i == 0 -> DotState.SELECT
+        unSelectIndex >= i -> DotState.LARGE
+        i == visibleDotCnt - 1 -> DotState.SMALL
+        else -> DotState.MEDIUM
+      }
+      dotSizeArray.add(state)
     }
 
-    // 최대 노출 dot 보다 작거나 같을 경우 -> 나머지 dot size = 4
-    if (count <= visibleDotCnt) {
-      (1 until count).forEach { i -> dots[i] = 4 }
-    } else { // 최대 노출 dot 보다 클 경우
-      // dot index 1~2 까지 dot size = 5
-      // etc dot size decrease minus 1
-      setDotSize()
-    }
-    Log.d("test dot init", dots())
+    if (count > visibleDotCnt) setDotSize()
   }
 
-  internal fun dots() = dots.joinToString(" ") + " selectedIndex $selectedIndex"
+  /**
+   * page up
+   */
+  fun onPageUp() {
+    if (selectedIndex >= dots.size - 1) return
 
-//  fun dotSizeFor(size: Byte) = dotStates[size] ?: 0
+    selectedIndex++
 
-  fun goToNext() {
-    if (selectedIndex >= dots.size - 1) {
-      return
-    }
-
-    ++selectedIndex
-
-    if (dots.size <= visibleDotCnt) {
-      goToNextSmall()
-    } else {
-      goToNextLarge()
-    }
-    Log.d("test goToNext", "scrollStartIndex: $scrollStartIndex scrollEndIndex: $scrollEndIndex")
-    Log.d("test dot goToNext", dots())
+    if (dots.size <= visibleDotCnt) onPageUpNormal()
+    else onPageUpWithAnimation()
   }
 
-  fun goToPrevious() {
-    if (selectedIndex == 0) {
-      return
-    }
+  /**
+   * page down
+   */
+  fun onPageDown() {
+    if (selectedIndex == 0) return
 
-    --selectedIndex
+    selectedIndex--
 
-    if (dots.size <= visibleDotCnt) {
-      goToPreviousSmall()
-    } else {
-      goToPreviousLarge()
-    }
-    Log.d("test goToPrevious", "scrollStartIndex: $scrollStartIndex scrollEndIndex: $scrollEndIndex")
-    Log.d("test dot goToPrevious", dots())
+    if (dots.size <= visibleDotCnt) onPageDownNormal()
+    else onPageDownWithAnimation()
   }
 
-  private fun goToNextSmall() {
-    dots[selectedIndex] = 5
-    dots[selectedIndex - 1] = 4
+  /**
+   * page up - dot size under visible dot count
+   */
+  private fun onPageUpNormal() {
+    dots[selectedIndex] = DotState.SELECT
+    dots[selectedIndex - 1] = DotState.LARGE
   }
 
-  private fun goToNextLarge() {
+  /**
+   * page up - dot size over visible dot count
+   */
+  private fun onPageUpWithAnimation() {
     setDotSize()
 
+    // page up animation
     if (selectedIndex < dots.size - 1 && selectedIndex == scrollEndIndex) {
-      Log.d("test up", "selectedIndex: $selectedIndex")
       scrollStartIndex++
       scrollEndIndex++
-      scrollAmount += dotSize + dotSpacing
-      targetScrollListener?.scrollToTarget(scrollAmount)
+      scrollAmount += dotSize
+      targetScrollListener.scrollToTarget(scrollAmount)
     }
   }
 
-  private fun goToPreviousSmall() {
-    dots[selectedIndex] = 6
-    dots[selectedIndex + 1] = 5
+  /**
+   * page down - dot size under visible dot count
+   */
+  private fun onPageDownNormal() {
+    dots[selectedIndex] = DotState.SELECT
+    dots[selectedIndex + 1] = DotState.LARGE
   }
 
-  private fun goToPreviousLarge() {
+  /**
+   * page down - dot size over visible dot count
+   */
+  private fun onPageDownWithAnimation() {
     setDotSize()
 
+    // page down animation
     if (selectedIndex > 0 && selectedIndex == scrollStartIndex) {
-      Log.d("test down", "selectedIndex: $selectedIndex")
       scrollStartIndex--
       scrollEndIndex--
-      scrollAmount -= dotSize + dotSpacing
-      targetScrollListener?.scrollToTarget(scrollAmount)
+      scrollAmount -= dotSize
+      targetScrollListener.scrollToTarget(scrollAmount)
     }
   }
 
   /**
    * set dot size
-   *
-   * ex) selected index = 6 -> dots = [0 1 2 3 4 4 5 4 4 3 2 1 0 0]
    */
   private fun setDotSize() {
     (selectedIndex until dots.size).forEach { i ->
-      dots[i] = if (i - selectedIndex < dotSizeArray.size) dotSizeArray[i - selectedIndex] else 0
+      dots[i] = if (i - selectedIndex < dotSizeArray.size) dotSizeArray[i - selectedIndex] else DotState.GONE
     }
     (selectedIndex - 1 downTo 0).forEach { i ->
-      dots[i] = if (selectedIndex - i < dotSizeArray.size) dotSizeArray[selectedIndex - i] else 0
+      dots[i] = if (selectedIndex - i < dotSizeArray.size) dotSizeArray[selectedIndex - i] else DotState.GONE
     }
   }
 

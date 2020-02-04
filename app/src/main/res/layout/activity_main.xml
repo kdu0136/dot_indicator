@@ -31,7 +31,7 @@
         tools:listitem="@layout/item_card"
         />
 
-    <kim.dongun.dotindicator.PageIndicator
+    <kim.dongun.dotindicator.DotIndicator
         android:visibility="gone"
         android:id="@+id/pageIndicator"
         android:background="#10C88E"
@@ -41,7 +41,7 @@
         android:layout_marginTop="8dp"
         />
 
-    <kim.dongun.dotindicator.PageIndicator
+    <kim.dongun.dotindicator.DotIndicator
         android:visibility="gone"
         android:id="@+id/pageIndicator2"
         android:background="#10C88E"
@@ -49,13 +49,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginTop="8dp"
-        app:piDotSpacing="8dp"
-        app:piSize1="8dp"
-        app:piSize2="8dp"
-        app:piSize3="8dp"
-        app:piSize4="8dp"
-        app:piSize5="8dp"
-        app:piSize6="8dp"
         />
 
     <TextView
@@ -75,7 +68,7 @@
         android:layout_height="360dp"
         />
 
-    <kim.dongun.dotindicator.PageIndicator
+    <kim.dongun.dotindicator.DotIndicator
         android:visibility="gone"
         android:background="#10C88E"
         android:id="@+id/pagerPageIndicator"
@@ -94,7 +87,7 @@
         style="@style/TextAppearance.AppCompat.Title"
         />
 
-    <kim.dongun.dotindicator.PageIndicator
+    <kim.dongun.dotindicator.DotIndicator
         android:background="#10C88E"
         android:id="@+id/manualPageIndicator"
         android:layout_width="wrap_content"
