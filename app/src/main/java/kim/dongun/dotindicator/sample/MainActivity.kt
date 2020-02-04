@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         pagerPageIndicator attachTo pager
 
         // Manual
-        manualPageIndicator.count = 50
+        manualPageIndicator.count = 20
         leftBtn.setOnClickListener { manualPageIndicator.swipePrevious() }
         rightBtn.setOnClickListener { manualPageIndicator.swipeNext() }
     }
@@ -56,6 +56,22 @@ class MainActivity : AppCompatActivity() {
                 "Fishers Peak Limited Edition Print",
                 "Brian Edward Miller ",
                 "https://cdn.dribbble.com/users/329207/screenshots/6128300/bemocs_fisherspeak_dribbble.jpg"),
+            MyAdapter.MyItem(
+                "First Man",
+                "Lana Marandina",
+                "https://cdn.dribbble.com/users/1461762/screenshots/6280906/first_man_lana_marandina_4x.png"),
+            MyAdapter.MyItem(
+                "First Man",
+                "Lana Marandina",
+                "https://cdn.dribbble.com/users/1461762/screenshots/6280906/first_man_lana_marandina_4x.png"),
+            MyAdapter.MyItem(
+                "First Man",
+                "Lana Marandina",
+                "https://cdn.dribbble.com/users/1461762/screenshots/6280906/first_man_lana_marandina_4x.png"),
+            MyAdapter.MyItem(
+                "First Man",
+                "Lana Marandina",
+                "https://cdn.dribbble.com/users/1461762/screenshots/6280906/first_man_lana_marandina_4x.png"),
             MyAdapter.MyItem(
                 "First Man",
                 "Lana Marandina",

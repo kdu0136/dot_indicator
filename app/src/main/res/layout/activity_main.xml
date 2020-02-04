@@ -13,6 +13,7 @@
       >
 
     <TextView
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
@@ -21,6 +22,7 @@
         />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,7 +32,9 @@
         />
 
     <kim.dongun.dotindicator.PageIndicator
+        android:visibility="gone"
         android:id="@+id/pageIndicator"
+        android:background="#10C88E"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -38,13 +42,14 @@
         />
 
     <kim.dongun.dotindicator.PageIndicator
+        android:visibility="gone"
         android:id="@+id/pageIndicator2"
+        android:background="#10C88E"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginTop="8dp"
         app:piDotSpacing="8dp"
-        app:piInitialPadding="16dp"
         app:piSize1="8dp"
         app:piSize2="8dp"
         app:piSize3="8dp"
@@ -54,6 +59,7 @@
         />
 
     <TextView
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -63,12 +69,15 @@
         />
 
     <androidx.viewpager.widget.ViewPager
+        android:visibility="gone"
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="360dp"
         />
 
     <kim.dongun.dotindicator.PageIndicator
+        android:visibility="gone"
+        android:background="#10C88E"
         android:id="@+id/pagerPageIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -81,11 +90,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:padding="16dp"
-        android:text="Manual"
+        android:text="TEST"
         style="@style/TextAppearance.AppCompat.Title"
         />
 
     <kim.dongun.dotindicator.PageIndicator
+        android:background="#10C88E"
         android:id="@+id/manualPageIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -103,24 +113,17 @@
           android:id="@+id/leftBtn"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="Left"
+          android:text="DOWN"
           style="@style/Widget.AppCompat.Button.Colored"
           />
       <Button
           android:id="@+id/rightBtn"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="right"
+          android:text="UP"
           style="@style/Widget.AppCompat.Button.Colored"
           />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="Photos by Mary Quincy"
-        style="@style/TextAppearance.AppCompat.Caption"
-        />
   </LinearLayout>
 </ScrollView>
