@@ -1,8 +1,9 @@
 package kim.dongun.dotindicator
 
 import androidx.viewpager.widget.ViewPager
+import kotlin.math.abs
 
-internal class PageChangeListener(private val indicator: PageIndicator) : ViewPager.OnPageChangeListener {
+internal class PagerChangeListener(private val indicator: DotIndicator) : ViewPager.OnPageChangeListener {
   private var selectedPage = 0
 
   override fun onPageScrollStateChanged(state: Int) {}
@@ -11,9 +12,10 @@ internal class PageChangeListener(private val indicator: PageIndicator) : ViewPa
 
   override fun onPageSelected(position: Int) {
     if (position != selectedPage) {
-      when {
-        this.selectedPage < position -> indicator.swipeNext()
-        else -> indicator.swipePrevious()
+      val diff = abs(selectedPage - position)
+      (0 until diff).forEach { _ ->
+        if (selectedPage < position) indicator.pageUp()
+        else indicator.pageDown()
       }
     }
     selectedPage = position

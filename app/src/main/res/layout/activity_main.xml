@@ -4,123 +4,111 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
-      >
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="RecyclerView"
-        style="@style/TextAppearance.AppCompat.Title"
-        />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_card"
-        />
-
-    <kim.dongun.dotindicator.PageIndicator
-        android:id="@+id/pageIndicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        />
-
-    <kim.dongun.dotindicator.PageIndicator
-        android:id="@+id/pageIndicator2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginTop="8dp"
-        app:piDotSpacing="8dp"
-        app:piInitialPadding="16dp"
-        app:piSize1="8dp"
-        app:piSize2="8dp"
-        app:piSize3="8dp"
-        app:piSize4="8dp"
-        app:piSize5="8dp"
-        app:piSize6="8dp"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:padding="16dp"
-        android:text="ViewPager"
-        style="@style/TextAppearance.AppCompat.Title"
-        />
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/pager"
-        android:layout_width="match_parent"
-        android:layout_height="360dp"
-        />
-
-    <kim.dongun.dotindicator.PageIndicator
-        android:id="@+id/pagerPageIndicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:padding="16dp"
-        android:text="Manual"
-        style="@style/TextAppearance.AppCompat.Title"
-        />
-
-    <kim.dongun.dotindicator.PageIndicator
-        android:id="@+id/manualPageIndicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        />
-
+    android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        >
-      <Button
-          android:id="@+id/leftBtn"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="Left"
-          style="@style/Widget.AppCompat.Button.Colored"
-          />
-      <Button
-          android:id="@+id/rightBtn"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="right"
-          style="@style/Widget.AppCompat.Button.Colored"
-          />
-    </LinearLayout>
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="Photos by Mary Quincy"
-        style="@style/TextAppearance.AppCompat.Caption"
-        />
-  </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="RecyclerView"
+            style="@style/TextAppearance.AppCompat.Title" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
+            tools:listitem="@layout/item_card" />
+
+        <kim.dongun.dotindicator.DotIndicator
+            android:id="@+id/dotIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:padding="16dp"
+            android:text="ViewPager"
+            style="@style/TextAppearance.AppCompat.Title" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
+
+        <kim.dongun.dotindicator.DotIndicator
+            android:id="@+id/pagerDotIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:padding="16dp"
+            android:text="ViewPager2"
+            style="@style/TextAppearance.AppCompat.Title" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager2"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:orientation="horizontal"/>
+
+        <kim.dongun.dotindicator.DotIndicator
+            android:id="@+id/pager2DotIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            app:indicatorVisibleDot="6"
+            app:dotSelectSize="20dp"
+            app:dotLargeSize="18dp"
+            app:dotMediumSize="15dp"
+            app:dotSmallSize="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:padding="16dp"
+            android:text="Button"
+            style="@style/TextAppearance.AppCompat.Title" />
+
+        <kim.dongun.dotindicator.DotIndicator
+            android:id="@+id/buttonDotIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/downBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DOWN" />
+            <Button
+                android:id="@+id/upBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="UP" />
+        </LinearLayout>
+
+    </LinearLayout>
 </ScrollView>

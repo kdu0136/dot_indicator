@@ -23,5 +23,4 @@ dependencies {
 
     implementation rootProject.kotlin
     implementation rootProject.defaultLibs
-    implementation rootProject.picasso
 }

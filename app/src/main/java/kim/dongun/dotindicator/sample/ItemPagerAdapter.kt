@@ -3,14 +3,10 @@ package kim.dongun.dotindicator.sample
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.viewpager.widget.PagerAdapter
-import kim.dongun.dotindicator.sample.MyAdapter.MyItem
-import com.squareup.picasso.Picasso
 
-class MyPagerAdapter(private val picasso: Picasso,
-                     private val items: List<MyItem>) : PagerAdapter() {
+class ItemPagerAdapter(private val items: ArrayList<ItemAdapter.Data>) : PagerAdapter() {
 
   override fun getCount() = items.size
 
@@ -22,18 +18,9 @@ class MyPagerAdapter(private val picasso: Picasso,
         .inflate(R.layout.item_card, container, false)
 
     val item = items[position]
-    val title: TextView = view.findViewById(R.id.title)
-    val caption: TextView = view.findViewById(R.id.caption)
-    val image: ImageView = view.findViewById(R.id.image)
+    val text: TextView = view.findViewById(R.id.text)
 
-    picasso
-        .load(item.image)
-        .placeholder(R.color.colorPrimaryDark)
-        .fit()
-        .centerCrop()
-        .into(image)
-    title.text = item.title
-    caption.text = item.caption
+      text.text = item.text
 
     container.addView(view)
     return view
