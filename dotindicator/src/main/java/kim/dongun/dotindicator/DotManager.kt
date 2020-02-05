@@ -2,11 +2,11 @@ package kim.dongun.dotindicator
 
 internal class DotManager(count: Int,
                           private val visibleDotCnt: Int,
-                          private val dotSize: Int,
+                          private val dotPadding: Int,
                           private val targetScrollListener: TargetScrollListener) {
   enum class DotState(val value: Byte) { SELECT(value = 4), LARGE(value = 3), MEDIUM(value = 2), SMALL(value = 1), GONE(value = 0) }
 
-  internal var dots: Array<DotState> = Array(count) { DotState.LARGE } // save each dot size (1~6 -> visible & 0 -> invisible)
+  internal var dots: Array<DotState> = Array(count) { DotState.LARGE } // save each dot state
   internal var selectedIndex = 0
 
   private var scrollAmount = 0
@@ -76,7 +76,7 @@ internal class DotManager(count: Int,
     if (selectedIndex < dots.size - 1 && selectedIndex == scrollEndIndex) {
       scrollStartIndex++
       scrollEndIndex++
-      scrollAmount += dotSize
+      scrollAmount += dotPadding
       targetScrollListener.scrollToTarget(scrollAmount)
     }
   }
@@ -99,7 +99,7 @@ internal class DotManager(count: Int,
     if (selectedIndex > 0 && selectedIndex == scrollStartIndex) {
       scrollStartIndex--
       scrollEndIndex--
-      scrollAmount -= dotSize
+      scrollAmount -= dotPadding
       targetScrollListener.scrollToTarget(scrollAmount)
     }
   }

@@ -11,9 +11,9 @@ internal class SavedState : BaseSavedState {
 
   constructor(superState: Parcelable) : super(superState)
 
-  private constructor(`in`: Parcel) : super(`in`) {
-    this.count = `in`.readInt()
-    this.selectedIndex = `in`.readInt()
+  private constructor(source: Parcel) : super(source) {
+    this.count = source.readInt()
+    this.selectedIndex = source.readInt()
   }
 
   override fun writeToParcel(out: Parcel, flags: Int) {
@@ -26,8 +26,8 @@ internal class SavedState : BaseSavedState {
     @JvmField
     @NotNull
     val CREATOR: Parcelable.Creator<SavedState> = object : Parcelable.Creator<SavedState> {
-      override fun createFromParcel(`in`: Parcel): SavedState {
-        return SavedState(`in`)
+      override fun createFromParcel(source: Parcel): SavedState {
+        return SavedState(source)
       }
 
       override fun newArray(size: Int): Array<SavedState?> {

@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import kotlin.math.max
 import kotlin.math.min
 
@@ -38,14 +39,15 @@ class DotIndicator @JvmOverloads constructor(context: Context,
     private var startPadding: Int = 0
 
     private lateinit var scrollListener: RecyclerView.OnScrollListener
-    private lateinit var pageChangeListener: ViewPager.OnPageChangeListener
+    private lateinit var pagerChangeListener: ViewPager.OnPageChangeListener
+    private lateinit var pager2ChangeListener: ViewPager2.OnPageChangeCallback
 
     var count: Int = 0
         set(value) {
             dotManager = DotManager(
                 count = value,
                 visibleDotCnt = MOST_VISIBLE_COUNT,
-                dotSize = maxDotSize + dotSpacing,
+                dotPadding = maxDotSize + dotSpacing,
                 targetScrollListener = this)
 
             dotAnimators = Array(value) { ValueAnimator() }
@@ -94,19 +96,20 @@ class DotIndicator @JvmOverloads constructor(context: Context,
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
+        // draw init dots
         var paddingStart = startPadding
         val (start, end) = getDrawingRange()
 
         paddingStart += (maxDotSize + dotSpacing) * start
         (start until end).forEach {
             canvas?.drawCircle(
-                paddingStart + maxDotSize / 2f - scrollAmount,
-                maxDotSize / 2f,
-                dotSize(state = dotManager.dots[it]) / 2f,
+                paddingStart + maxDotSize / 2f - scrollAmount, // x
+                maxDotSize / 2f, // y
+                dotSize(state = dotManager.dots[it]) / 2f, // radius
                 when (dotManager.dots[it]) {
                     DotManager.DotState.SELECT -> selectedPaint
                     else -> defaultPaint
-                })
+                }) // paint
             paddingStart += maxDotSize + dotSpacing
         }
     }
@@ -117,7 +120,7 @@ class DotIndicator @JvmOverloads constructor(context: Context,
             return superState
         }
 
-        val savedState = SavedState(superState)
+        val savedState = SavedState(superState = superState)
         savedState.count = this.count
         savedState.selectedIndex = this.dotManager.selectedIndex
         return savedState
@@ -133,7 +136,7 @@ class DotIndicator @JvmOverloads constructor(context: Context,
 
         this.count = state.count
         for (i in 0 until state.selectedIndex) {
-            swipeNext()
+            pageUp()
         }
     }
 
@@ -150,47 +153,68 @@ class DotIndicator @JvmOverloads constructor(context: Context,
         }
     }
 
+    /**
+     * attach to recyclerView
+     */
     infix fun attachTo(recyclerView: RecyclerView) {
         if (::scrollListener.isInitialized) {
             recyclerView.removeOnScrollListener(scrollListener)
         }
         count = recyclerView.adapter?.itemCount ?: 0
-        scrollListener = ScrollListener(this)
+        scrollListener = ScrollListener(indicator = this)
         recyclerView.addOnScrollListener(scrollListener)
         scrollToTarget(0)
     }
 
+    /**
+     * attach to viewPager
+     */
     infix fun attachTo(viewPager: ViewPager) {
-        if (::pageChangeListener.isInitialized) {
-            viewPager.removeOnPageChangeListener(pageChangeListener)
+        if (::pagerChangeListener.isInitialized) {
+            viewPager.removeOnPageChangeListener(pagerChangeListener)
         }
         count = (viewPager.adapter as PagerAdapter).count
-        pageChangeListener = PageChangeListener(this)
-        viewPager.addOnPageChangeListener(pageChangeListener)
+        pagerChangeListener = PagerChangeListener(indicator = this)
+        viewPager.addOnPageChangeListener(pagerChangeListener)
         scrollToTarget(0)
     }
 
-    fun swipePrevious() {
-        dotManager.onPageDown()
-        animateDots()
+    /**
+     * attach to viewPager2
+     */
+    infix fun attachTo(viewPager: ViewPager2) {
+        if (::pager2ChangeListener.isInitialized) {
+            viewPager.unregisterOnPageChangeCallback(pager2ChangeListener)
+        }
+        count = viewPager.adapter?.itemCount ?: 0
+        pager2ChangeListener = Pager2ChangeListener(indicator = this)
+        viewPager.registerOnPageChangeCallback(pager2ChangeListener)
+        scrollToTarget(0)
     }
 
-    fun swipeNext() {
+    fun pageUp() {
         dotManager.onPageUp()
         animateDots()
     }
 
+    fun pageDown() {
+        dotManager.onPageDown()
+        animateDots()
+    }
+
+    /**
+     * dot size change animation
+     */
     private fun animateDots() {
         dotManager.let {
             val (start, end) = getDrawingRange()
             (start until end).forEach { index ->
                 dotAnimators[index].cancel()
-                dotAnimators[index] = ValueAnimator.ofInt(dotSize(state = dotManager.dots[index]), dotSize(state = it.dots[index]))
-                    .apply {
-                        duration = animDuration
-                        interpolator = DEFAULT_INTERPOLATOR
-                        addUpdateListener { invalidate() }
-                    }
+                dotAnimators[index] = ValueAnimator.ofInt(dotSize(state = dotManager.dots[index]), dotSize(state = it.dots[index])).apply {
+                    duration = animDuration
+                    interpolator = DEFAULT_INTERPOLATOR
+                    addUpdateListener { invalidate() }
+                }
                 dotAnimators[index].start()
             }
         }
