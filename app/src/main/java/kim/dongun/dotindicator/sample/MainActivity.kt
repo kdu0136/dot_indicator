@@ -17,26 +17,26 @@ class MainActivity : AppCompatActivity() {
         val adapter = ItemAdapter().apply {
             updateData(updateData = items)
         }
-        list.adapter = adapter
-        LinearSnapHelper().attachToRecyclerView(list)
-        pageIndicator attachTo list
+        recyclerView.adapter = adapter
+        LinearSnapHelper().attachToRecyclerView(recyclerView)
+        dotIndicator attachTo recyclerView
 
         // ViewPager
         val pagerAdapter = ItemPagerAdapter(items = items)
-        pager.adapter = pagerAdapter
-        pagerPageIndicator attachTo pager
+        viewPager.adapter = pagerAdapter
+        pagerDotIndicator attachTo viewPager
 
         // ViewPager2
         val pager2Adapter = ItemAdapter().apply {
             updateData(updateData = items)
         }
-        pager2.adapter = pager2Adapter
-        pager2PageIndicator attachTo pager2
+        viewPager2.adapter = pager2Adapter
+        pager2DotIndicator attachTo viewPager2
 
         // Button
-        manualPageIndicator.count = 20
-        leftBtn.setOnClickListener { manualPageIndicator.pageDown() }
-        rightBtn.setOnClickListener { manualPageIndicator.pageUp() }
+        buttonDotIndicator.count = 20
+        downBtn.setOnClickListener { buttonDotIndicator.pageDown() }
+        upBtn.setOnClickListener { buttonDotIndicator.pageUp() }
     }
 
     companion object {

@@ -8,7 +8,6 @@ import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.view.animation.DecelerateInterpolator
 import android.view.animation.Interpolator
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -64,27 +63,27 @@ class DotIndicator @JvmOverloads constructor(context: Context,
     init {
         val typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.DotIndicator)
         dotStateMap = mapOf(
-            DotManager.DotState.SELECT to typedArray.getDimensionPixelSize(R.styleable.DotIndicator_dotSelectSize, 8f.dp),
-            DotManager.DotState.LARGE to typedArray.getDimensionPixelSize(R.styleable.DotIndicator_dotLargeSize, 6.5f.dp),
-            DotManager.DotState.MEDIUM to typedArray.getDimensionPixelSize(R.styleable.DotIndicator_dotMediumSize, 4.5f.dp),
-            DotManager.DotState.SMALL to typedArray.getDimensionPixelSize(R.styleable.DotIndicator_dotSmallSize, 3f.dp),
+            DotManager.DotState.SELECT to typedArray.getDimensionPixelSize(R.styleable.DotIndicator_dotSelectSize, 5f.dp),
+            DotManager.DotState.LARGE to typedArray.getDimensionPixelSize(R.styleable.DotIndicator_dotLargeSize, 4.5f.dp),
+            DotManager.DotState.MEDIUM to typedArray.getDimensionPixelSize(R.styleable.DotIndicator_dotMediumSize, 3f.dp),
+            DotManager.DotState.SMALL to typedArray.getDimensionPixelSize(R.styleable.DotIndicator_dotSmallSize, 2f.dp),
             DotManager.DotState.GONE to 0.dp
         )
         maxDotSize = dotStateMap.values.max() ?: 0
-        dotSpacing = typedArray.getDimensionPixelSize(R.styleable.DotIndicator_dotSpacing, 4.dp)
+        dotSpacing = typedArray.getDimensionPixelSize(R.styleable.DotIndicator_dotSpacing, 3.dp)
         indicatorPadding = typedArray.getDimensionPixelSize(R.styleable.DotIndicator_indicatorPadding, 0.dp)
 
         animDuration = typedArray.getInteger(
-            R.styleable.DotIndicator_indicatorAnimDuration, DEFAULT_ANIM_DURATION).toLong()
+            R.styleable.DotIndicator_indicatorAnimDuration, 300).toLong()
         defaultPaint.color = typedArray.getColor(
             R.styleable.DotIndicator_dotDefaultColor,
-            ContextCompat.getColor(getContext(), R.color.pi_default_color))
+            ContextCompat.getColor(getContext(), R.color.dot_default_color))
         selectedPaint.color = typedArray.getColor(
             R.styleable.DotIndicator_dotSelectedColor,
-            ContextCompat.getColor(getContext(), R.color.pi_selected_color))
+            ContextCompat.getColor(getContext(), R.color.dot_selected_color))
         animInterpolator = AnimationUtils.loadInterpolator(context, typedArray.getResourceId(
             R.styleable.DotIndicator_indicatorAnimInterpolator,
-            R.anim.pi_default_interpolator))
+            R.anim.decelerate_interpolator))
         typedArray.recycle()
     }
 
@@ -144,7 +143,7 @@ class DotIndicator @JvmOverloads constructor(context: Context,
         scrollAnimator?.cancel()
         scrollAnimator = ValueAnimator.ofInt(scrollAmount, target).apply {
             duration = animDuration
-            interpolator = DEFAULT_INTERPOLATOR
+            interpolator = animInterpolator
             addUpdateListener { animation ->
                 scrollAmount = animation.animatedValue as Int
                 invalidate()
@@ -212,7 +211,7 @@ class DotIndicator @JvmOverloads constructor(context: Context,
                 dotAnimators[index].cancel()
                 dotAnimators[index] = ValueAnimator.ofInt(dotSize(state = dotManager.dots[index]), dotSize(state = it.dots[index])).apply {
                     duration = animDuration
-                    interpolator = DEFAULT_INTERPOLATOR
+                    interpolator = animInterpolator
                     addUpdateListener { invalidate() }
                 }
                 dotAnimators[index].start()
@@ -237,8 +236,7 @@ class DotIndicator @JvmOverloads constructor(context: Context,
 
     companion object {
         private const val MOST_VISIBLE_COUNT = 6
-        private const val DEFAULT_ANIM_DURATION = 300
 
-        private val DEFAULT_INTERPOLATOR = DecelerateInterpolator()
+//        private val DEFAULT_INTERPOLATOR = DecelerateInterpolator()
     }
 }

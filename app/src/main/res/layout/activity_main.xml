@@ -18,7 +18,7 @@
             style="@style/TextAppearance.AppCompat.Title" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list"
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -26,8 +26,7 @@
             tools:listitem="@layout/item_card" />
 
         <kim.dongun.dotindicator.DotIndicator
-            android:id="@+id/pageIndicator"
-            android:background="#10C88E"
+            android:id="@+id/dotIndicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -42,13 +41,12 @@
             style="@style/TextAppearance.AppCompat.Title" />
 
         <androidx.viewpager.widget.ViewPager
-            android:id="@+id/pager"
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="150dp" />
 
         <kim.dongun.dotindicator.DotIndicator
-            android:background="#10C88E"
-            android:id="@+id/pagerPageIndicator"
+            android:id="@+id/pagerDotIndicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -63,13 +61,12 @@
             style="@style/TextAppearance.AppCompat.Title" />
 
         <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/pager2"
+            android:id="@+id/viewPager2"
             android:layout_width="match_parent"
             android:layout_height="150dp" />
 
         <kim.dongun.dotindicator.DotIndicator
-            android:background="#10C88E"
-            android:id="@+id/pager2PageIndicator"
+            android:id="@+id/pager2DotIndicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -88,8 +85,7 @@
             style="@style/TextAppearance.AppCompat.Title" />
 
         <kim.dongun.dotindicator.DotIndicator
-            android:background="#10C88E"
-            android:id="@+id/manualPageIndicator"
+            android:id="@+id/buttonDotIndicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
@@ -101,17 +97,15 @@
             android:gravity="center"
             android:orientation="horizontal">
             <Button
-                android:id="@+id/leftBtn"
+                android:id="@+id/downBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DOWN"
-                style="@style/Widget.AppCompat.Button.Colored" />
+                android:text="DOWN" />
             <Button
-                android:id="@+id/rightBtn"
+                android:id="@+id/upBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="UP"
-                style="@style/Widget.AppCompat.Button.Colored" />
+                android:text="UP" />
         </LinearLayout>
 
     </LinearLayout>
