@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <declare-styleable name="DotIndicator">
+    <attr format="integer" name="indicatorVisibleDot"/>
+
     <attr format="dimension" name="indicatorPadding"/>
     <attr format="dimension" name="dotSpacing"/>
 

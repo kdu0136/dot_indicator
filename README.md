@@ -62,6 +62,7 @@ Add the `DotIndicator` to your XML file:
 | Attribute                  | Note                                      | Default     |
 |----------------------------|-------------------------------------------|-------------|
 | indicatorPadding           | Padding start and end                     | 0dp         |
+| indicatorVisibleDot        | Visible dot's count                       | 5           |
 | dotSpacing                 | Spacing between dots                      | 3dp         |
 | dotSelectSize              | Selected dot size                         | 5dp         |
 | dotLargeSize               | Unselect large dot size                   | 4.5dp       |

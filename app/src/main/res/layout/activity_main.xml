@@ -21,8 +21,8 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
             tools:listitem="@layout/item_card" />
 
         <kim.dongun.dotindicator.DotIndicator
@@ -63,7 +63,8 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager2"
             android:layout_width="match_parent"
-            android:layout_height="150dp" />
+            android:layout_height="150dp"
+            android:orientation="horizontal"/>
 
         <kim.dongun.dotindicator.DotIndicator
             android:id="@+id/pager2DotIndicator"
@@ -71,6 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
+            app:indicatorVisibleDot="6"
             app:dotSelectSize="20dp"
             app:dotLargeSize="18dp"
             app:dotMediumSize="15dp"

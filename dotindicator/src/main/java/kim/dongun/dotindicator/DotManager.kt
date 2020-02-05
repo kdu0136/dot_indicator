@@ -1,5 +1,7 @@
 package kim.dongun.dotindicator
 
+import android.util.Log
+
 internal class DotManager(count: Int,
                           private val visibleDotCnt: Int,
                           private val dotPadding: Int,
@@ -108,7 +110,8 @@ internal class DotManager(count: Int,
    * set dot size
    */
   private fun setDotSize() {
-    (selectedIndex until dots.size).forEach { i ->
+    dots[selectedIndex] = DotState.SELECT
+    (selectedIndex + 1 until dots.size).forEach { i ->
       dots[i] = if (i - selectedIndex < dotSizeArray.size) dotSizeArray[i - selectedIndex] else DotState.GONE
     }
     (selectedIndex - 1 downTo 0).forEach { i ->

@@ -1,7 +1,7 @@
 package kim.dongun.dotindicator.sample
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearSnapHelper
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
             updateData(updateData = items)
         }
         recyclerView.adapter = adapter
+        recyclerView.layoutManager
         LinearSnapHelper().attachToRecyclerView(recyclerView)
         dotIndicator attachTo recyclerView
 
@@ -32,6 +33,8 @@ class MainActivity : AppCompatActivity() {
         }
         viewPager2.adapter = pager2Adapter
         pager2DotIndicator attachTo viewPager2
+
+        viewPager2.setCurrentItem(items.size / 2, false)
 
         // Button
         buttonDotIndicator.count = 20

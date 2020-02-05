@@ -25,6 +25,7 @@ class DotIndicator @JvmOverloads constructor(context: Context,
     private val defaultPaint = Paint().apply { isAntiAlias = true }
     private val selectedPaint = Paint().apply { isAntiAlias = true }
 
+    private val visibleDotCnt: Int
     private val maxDotSize: Int
     private val dotStateMap: Map<DotManager.DotState, Int>
     private val indicatorPadding: Int
@@ -45,7 +46,7 @@ class DotIndicator @JvmOverloads constructor(context: Context,
         set(value) {
             dotManager = DotManager(
                 count = value,
-                visibleDotCnt = MOST_VISIBLE_COUNT,
+                visibleDotCnt = visibleDotCnt,
                 dotPadding = maxDotSize + dotSpacing,
                 targetScrollListener = this)
 
@@ -70,6 +71,7 @@ class DotIndicator @JvmOverloads constructor(context: Context,
             DotManager.DotState.GONE to 0.dp
         )
         maxDotSize = dotStateMap.values.max() ?: 0
+        visibleDotCnt = typedArray.getInteger( R.styleable.DotIndicator_indicatorVisibleDot, 5)
         dotSpacing = typedArray.getDimensionPixelSize(R.styleable.DotIndicator_dotSpacing, 3.dp)
         indicatorPadding = typedArray.getDimensionPixelSize(R.styleable.DotIndicator_indicatorPadding, 0.dp)
 
@@ -89,7 +91,7 @@ class DotIndicator @JvmOverloads constructor(context: Context,
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        setMeasuredDimension(min(count, MOST_VISIBLE_COUNT) * (maxDotSize + dotSpacing) + indicatorPadding + startPadding, maxDotSize)
+        setMeasuredDimension(min(count, visibleDotCnt) * (maxDotSize + dotSpacing) + indicatorPadding + startPadding, maxDotSize)
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -233,10 +235,4 @@ class DotIndicator @JvmOverloads constructor(context: Context,
      * @return dot size for the state
      */
     private fun dotSize(state: DotManager.DotState) = dotStateMap[state] ?: 0.dp
-
-    companion object {
-        private const val MOST_VISIBLE_COUNT = 6
-
-//        private val DEFAULT_INTERPOLATOR = DecelerateInterpolator()
-    }
 }
